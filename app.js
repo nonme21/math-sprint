@@ -9,15 +9,12 @@ let gameTimeSetting = parseInt(localStorage.getItem('math_sprint_time')) || 60;
 let lives = 3;
 let secondsLeft = 60;
 let gameMode = 'normal'; // 'normal' or 'record'
-let isGameOver = false;
 let currentCorrectAnswer = null;
-let currentQuestionIndex = 0;
 let roundCount = 0;
 let rewardedAdUsed = false;
 
 // Intervals and Timers
 let gameTimerInterval = null;
-let commentStreamInterval = null;
 
 // DOM Elements
 const homeScreen = document.getElementById('home-screen');
@@ -35,10 +32,6 @@ const bonusToast = document.getElementById('bonus-toast');
 // Home screen DOM elements
 const bestNormalText = document.getElementById('best-normal');
 const btnStartNormal = document.getElementById('btn-start-normal');
-const btnStartImpossible = document.getElementById('btn-start-impossible');
-const tiktokToggle = document.getElementById('tiktok-toggle');
-const tiktokOverlay = document.getElementById('tiktok-overlay');
-const commentsList = document.getElementById('comments-list');
 
 // Settings DOM elements
 const btnSettings = document.getElementById('btn-settings');
@@ -108,28 +101,7 @@ function triggerVibration(pattern) {
     }
 }
 
-// TikTok Mock Comments Database
-const MOCK_COMMENTS = [
-    "bro 💀 how did you miss 5+3",
-    "is this impossible mode?",
-    "my grandma calculates faster 😂",
-    "no way 347 - 12 is that hard",
-    "POV: trying to look smart",
-    "chat is this real?",
-    "speedrun fail 🤡",
-    "wait he got it wrong again!",
-    "HE SLIPPED UP HAHAHA",
-    "TikTok comments gonna roast him",
-    "impossible mode is wild 💀💀",
-    "why did he click that lol",
-    "easy calculations under pressure be like",
-    "HE PRESSED THE wrong key!",
-    "Bro lost 3 secs again 📉",
-    "the timer is ticking fast!",
-    "wasted 😂",
-    "insane clicks speed ⚡",
-    "wait that is correct actually"
-];
+
 
 // Initialize application
 function init() {
@@ -218,7 +190,6 @@ function showHomeScreen() {
 function startGame(mode) {
     gameMode = mode;
     score = 0;
-    isGameOver = false;
     rewardedAdUsed = false;
     currentScoreText.textContent = '0';
     timerBadge.classList.remove('danger');
@@ -244,13 +215,7 @@ function startGame(mode) {
     homeScreen.classList.remove('active');
     gameScreen.classList.add('active');
 
-    // Handle TikTok Overlay Visibility
-    if (tiktokToggle.checked) {
-        tiktokOverlay.classList.add('active');
-        startTikTokCommentsStream();
-    } else {
-        tiktokOverlay.classList.remove('active');
-    }
+
 
     generateQuestion();
     startTimer();
@@ -481,10 +446,8 @@ function checkAnswer(selectedIndex, clickedButton) {
 
 // Handling time runs out
 function handleTimeOut() {
-    isGameOver = true;
     roundCount++;
     clearInterval(gameTimerInterval);
-    stopTikTokCommentsStream();
 
     // Check if Interstitial ad should trigger (every 3 rounds)
     if (roundCount % 3 === 0) {
@@ -553,44 +516,7 @@ function restartGame() {
 // Back out of active game session
 function leaveGame() {
     clearInterval(gameTimerInterval);
-    stopTikTokCommentsStream();
     showHomeScreen();
-}
-
-/* SIMULATING TIKTOK STREAM UI */
-function startTikTokCommentsStream() {
-    commentsList.innerHTML = '';
-
-    // Add initial few comments
-    for (let i = 0; i < 3; i++) {
-        addMockComment();
-    }
-
-    // Tick stream
-    commentStreamInterval = setInterval(() => {
-        addMockComment();
-    }, 1500);
-}
-
-function stopTikTokCommentsStream() {
-    if (commentStreamInterval) clearInterval(commentStreamInterval);
-}
-
-function addMockComment() {
-    const randomComment = MOCK_COMMENTS[Math.floor(Math.random() * MOCK_COMMENTS.length)];
-    const bubble = document.createElement('div');
-    bubble.className = 'comment-bubble';
-    bubble.textContent = randomComment;
-
-    commentsList.appendChild(bubble);
-
-    // Limit length of DOM inside chat to prevent memory bloat
-    if (commentsList.children.length > 20) {
-        commentsList.removeChild(commentsList.firstChild);
-    }
-
-    // Scroll to bottom
-    commentsList.scrollTop = commentsList.scrollHeight;
 }
 
 /* MONETIZATION: AD SIMULATORS */
@@ -671,7 +597,6 @@ function triggerRewardedAd() {
 
             // Give reward (15 seconds) and resume game
             rewardedAdUsed = true;
-            isGameOver = false;
 
             if (gameMode === 'record') {
                 lives = 1;
@@ -687,9 +612,6 @@ function triggerRewardedAd() {
             closeGameOverModal();
             generateQuestion();
             startTimer();
-            if (tiktokToggle.checked) {
-                startTikTokCommentsStream();
-            }
         }
     }, 1000);
 }
