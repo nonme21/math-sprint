@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Sprint - Web Preview</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,400;0,600;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background glow elements -->
+    <div class="glow-bg-1"></div>
+    <div class="glow-bg-2"></div>
+
+    <div class="app-container">
+        <!-- HOME SCREEN -->
+        <div id="home-screen" class="screen active">
+            <div class="menu-content">
+                <div class="logo-container">
+                    <div class="logo-box">
+                        <svg class="math-sprint-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Speed lines -->
+                            <path d="M25 45h10M20 55h15M30 65h5" stroke="#007bff" stroke-width="6" stroke-linecap="round"/>
+                            <!-- Square root -->
+                            <path d="M40 60l5 15l15-40h20" stroke="#007bff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                            <!-- X letter -->
+                            <path d="M60 45l15 20M75 45l-15 20" stroke="#00d2ff" stroke-width="6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="logo-title"><em>MATH <span class="text-gradient">SPRINT</span></em></h1>
+
+                <!-- High Score Panel -->
+                <div class="scores-panel-new">
+                    <div class="trophy-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19,5h-2V3H7v2H5C3.9,5,3,5.9,3,7v1c0,2.55,1.92,4.63,4.39,4.94c0.63,1.5,1.98,2.63,3.61,2.96V19H7v2h10v-2h-4v-3.1 c1.63-0.33,2.98-1.46,3.61-2.96C19.08,12.63,21,10.55,21,8V7C21,5.9,20.1,5,19,5z M5,8V7h2v3.82C5.84,10.4,5,9.3,5,8z M19,8 c0,1.3-0.84,2.4-2,2.82V7h2V8z"/>
+                        </svg>
+                    </div>
+                    <div class="score-info">
+                        <span class="score-label">МАКСИМАЛЬНЫЙ СЧЕТ</span>
+                        <span id="best-normal" class="score-value">- - - - -</span>
+                    </div>
+                </div>
+
+                <!-- Mode Selectors -->
+                <div class="modes-list-new">
+                    <!-- Record Mode (Star icon) -->
+                    <button class="btn-new btn-play" id="btn-start-record">
+                        <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+                    </button>
+
+                    <!-- Normal Mode (Clock icon) -->
+                    <button class="btn-new btn-impossible" id="btn-start-normal">
+                        <svg class="impossible-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                    </button>
+
+                    <button class="btn-new btn-settings" id="btn-settings">
+                        <svg class="settings-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAMEPLAY SCREEN -->
+        <div id="game-screen" class="screen">
+            <!-- Game HUD -->
+            <div class="game-hud">
+                <button class="btn-back" id="btn-game-back">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="hud-badge timer-badge" id="timer-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                    <span id="seconds-left">60s</span>
+                </div>
+                <div class="hud-badge score-badge">
+                    <span>Счет: </span>
+                    <span id="current-score" class="bold">0</span>
+                </div>
+                <div class="hud-badge lives-badge hidden" id="lives-badge">
+                    <span id="lives-count">❤️❤️❤️</span>
+                </div>
+            </div>
+
+            <!-- Timer Progress bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="timer-progress"></div>
+            </div>
+
+            <!-- Equation Area -->
+            <div class="equation-box" id="equation-box">
+                <div class="penalty-toast" id="penalty-toast">-3 СЕК!</div>
+                <div class="bonus-toast" id="bonus-toast">+1 ОЧКО!</div>
+                <div class="equation-text" id="equation-text">17 + 28 = ?</div>
+            </div>
+
+            <!-- Answers choices -->
+            <div class="choices-grid">
+                <button class="choice-btn" data-index="0">45</button>
+                <button class="choice-btn" data-index="1">38</button>
+                <button class="choice-btn" data-index="2">52</button>
+                <button class="choice-btn" data-index="3">41</button>
+            </div>
+        </div>
+
+        <!-- GAME OVER DIALOG OVERLAY -->
+        <div id="game-over-modal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="trophy-container">🏆</div>
+                <h2 class="modal-title">ВРЕМЯ ВЫШЛО!</h2>
+                <div class="modal-results">
+                    <p class="final-score">Ваш счет: <span id="final-score-val">0</span> очков</p>
+                    <div id="new-high-score-badge" class="high-score-badge hidden">🎉 НОВЫЙ РЕКОРД! 🎉</div>
+                    <p class="best-score-label">Рекорд: <span id="high-score-val">0</span> очков</p>
+                </div>
+                <p class="monetization-caption">Симуляция монетизации:</p>
+                
+                <div class="modal-actions">
+                    <button class="btn-rewarded" id="btn-watch-rewarded">
+                        🎬 РЕКЛАМА ЗА +15 СЕК
+                    </button>
+                    <div class="modal-actions-row">
+                        <button class="btn-outline" id="btn-game-menu">ГЛАВНОЕ МЕНЮ</button>
+                        <button class="btn-solid" id="btn-game-retry">ИГРАТЬ СНОВА</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIMULATED ADS OVERLAY -->
+        <div id="ad-modal" class="ad-overlay">
+            <div class="ad-container">
+                <div class="ad-countdown-badge">
+                    <span id="ad-timer-label">Закроется через</span>
+                    <span id="ad-countdown-seconds" class="highlight">5s</span>
+                </div>
+                <div class="ad-content">
+                    <div class="ad-icon">📺</div>
+                    <h3 class="ad-title" id="ad-title">СИМУЛЯЦИЯ РЕКЛАМЫ</h3>
+                    <p class="ad-desc">Это симуляция рекламного места. Реклама поддерживает разработку!</p>
+                    <div class="ad-loader-track">
+                        <div class="ad-loader-fill" id="ad-loader-fill"></div>
+                    </div>
+                </div>
+                <button class="btn-skip-ad hidden" id="btn-skip-ad">ПРОПУСТИТЬ ⏩</button>
+            </div>
+        </div>
+
+        <!-- SETTINGS MODAL OVERLAY -->
+        <div id="settings-modal" class="modal-overlay">
+            <div class="modal-content">
+                <h2 class="modal-title">НАСТРОЙКИ</h2>
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <span>Время (сек)</span>
+                        <select id="setting-time" class="time-select">
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="60">60</option>
+                            <option value="120">120</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <span>Звук</span>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-sound" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Вибрация</span>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-vibration" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Светлая тема</span>
+                        <label class="switch">
+                            <input type="checkbox" id="setting-theme">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item" style="margin-top: 16px;">
+                        <button class="btn-outline" id="btn-reset-records" style="width: 100%; color: var(--neon-red); border-color: var(--neon-red);">СБРОСИТЬ РЕКОРДЫ</button>
+                    </div>
+                </div>
+                <div class="modal-actions" style="margin-top: 24px;">
+                    <button class="btn-solid" id="btn-settings-close">ЗАКРЫТЬ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- tiktok toggle hidden for js compability -->
+    <input type="checkbox" id="tiktok-toggle" style="display:none">
+    <div class="tiktok-overlay" id="tiktok-overlay" style="display:none">
+        <div class="tiktok-comments-container">
+            <div class="comments-list" id="comments-list"></div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
